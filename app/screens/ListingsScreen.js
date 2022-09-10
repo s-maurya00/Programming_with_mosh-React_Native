@@ -44,7 +44,6 @@ const ListingsScreen = ( { navigation } ) => {
 
     useEffect(() => {
         getListingsApi.request();
-        console.log(getListingsApi.data)
     }, []);
 
 
