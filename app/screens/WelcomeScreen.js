@@ -1,12 +1,12 @@
 import { View, SafeAreaView, Text, StyleSheet, ImageBackground, Image, Platform, StatusBar } from "react-native";
 
-import AppButton from "../components/AppButton";
+import AppButton from "../components/ui/AppButton";
+import routes from "../navigations/routes";
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ( { navigation } ) => {
 
     return (
-
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <ImageBackground blurRadius={10} style={styles.background} source={require('../assets/background.jpg')}>
                 <View style={styles.logoContainer}>
                     <Image style={styles.logo} source={require('../assets/logo-red.png')} />
@@ -14,12 +14,12 @@ const WelcomeScreen = () => {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <AppButton title="Login" />
+                    <AppButton title="Login" onPress={() => navigation.navigate(routes.LOGIN_SCREEN)} />
 
-                    <AppButton title="Register" color="secondary" />
+                    <AppButton title="Register" color="secondary" onPress={() => navigation.navigate(routes.REGISTER_SCREEN)} />
                 </View>
             </ImageBackground>
-        </SafeAreaView>
+        </View>
 
     )
 }
@@ -27,7 +27,6 @@ const WelcomeScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     },
 
     background: {

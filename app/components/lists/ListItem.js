@@ -2,34 +2,31 @@ import { View, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import AppText from '../AppText';
-import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler'; //Not sure why this was imported in this file
-// GestureHandlerRootView enabled the swipe gesture to run in android environment and without it the swipe gesture only worked in IOS device
+import { Swipeable } from 'react-native-gesture-handler';
 
 
 import colors from '../../configs/colors';
 
 const ListItem = ({ title, subTitle, image, onPress, IconComponent, renderRightActions, style }) => {
     return (
-        <GestureHandlerRootView>
-            <Swipeable renderRightActions={renderRightActions}>
-                <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
-                    <View style={[styles.container, style]}>
+        <Swipeable renderRightActions={renderRightActions}>
+            <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
+                <View style={[styles.container, style]}>
 
-                        { IconComponent }
+                    { IconComponent }
 
-                        { image && <Image style={styles.image} source={image} /> }
+                    { image && <Image style={styles.image} source={image} /> }
 
-                        <View style={styles.detailsContainer}>
-                            <AppText style={styles.title} numberOfLines={1} > {title} </AppText>
+                    <View style={styles.detailsContainer}>
+                        <AppText style={styles.title} numberOfLines={1} > {title} </AppText>
 
-                            { subTitle && <AppText style={styles.subTitle} numberOfLines={2}> {subTitle} </AppText>}
-                        </View>
-
-                        { renderRightActions && <MaterialCommunityIcons color={colors.medium} name='chevron-right' size={20} />}
+                        { subTitle && <AppText style={styles.subTitle} numberOfLines={2}> {subTitle} </AppText>}
                     </View>
-                </TouchableHighlight>
-            </Swipeable>
-        </GestureHandlerRootView>
+
+                    { renderRightActions && <MaterialCommunityIcons color={colors.medium} name='chevron-right' size={20} />}
+                </View>
+            </TouchableHighlight>
+        </Swipeable>
     );
 }
 

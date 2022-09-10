@@ -1,24 +1,25 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { AppFormField, SubmitButton, AppFormPicker } from '../components/forms';
-import AppPicker from '../components/AppPicker';
+import { AppFormField, AppFormPicker, FormImagePicker, SubmitButton } from '../components/forms';
 import CategoryPickerItem from '../components/CategoryPickerItem';
 import Screen from '../components/Screen';
 
 import colors from '../configs/colors';
+import useLocation from '../hooks/useLocation';
 
 const validationSchema = Yup.object().shape({
     title: Yup.string().required().min(1).label("Title"),
     price: Yup.number().required().min(1).max(10000).label("Price"),
     description: Yup.string().label("Description"),
     category: Yup.object().required().nullable().label("Category"),
+    images: Yup.array().min(1, "Please select at least one image!"),
 });
 
-const category = [
+const categories = [
     { label: "Books", value: 1, backgroundColor: 'purple', icon: 'book-open-blank-variant'},
     { label: "Camera", value: 2, backgroundColor: 'lightblue', icon: 'camera'},
     { label: "Cars", value: 3, backgroundColor: 'chocolate', icon: 'car'},
@@ -31,17 +32,21 @@ const category = [
 ]
 
 const ListingEditScreen = () => {
-    const [selectedCategory, setSelectedCategory] = useState();
+    // const [selectedCategory, setSelectedCategory] = useState();
+
+    const location = useLocation();
 
     return (
         <Screen style={styles.container}>
             <Formik
-                initialValues={{ title: '', price: '', description: '', category: null }}
-                onSubmit={(values) => console.log(values)}
+                initialValues={{ title: '', price: '', description: '', category: null, images: [] }}
+                onSubmit={(values) => console.log(location)}
                 validationSchema={validationSchema}
             >
                 {() => (
                     <>
+                        <FormImagePicker name="images" />
+
                         <AppFormField maxLength={255} name="title" placeholder="Title" placeholderTextColor={colors.medium} />
 
                         <AppFormField
@@ -52,14 +57,14 @@ const ListingEditScreen = () => {
                             placeholderTextColor={colors.medium}
                         />
                         
-                        <AppPicker
-                            items={category}
+                        <AppFormPicker
+                            items={categories}
                             name="category"
                             numberOfColumns={3}
-                            onSelectItem={item => setSelectedCategory(item)}
+                            // onSelectItem={item => setSelectedCategory(item)}
                             PickerItemComponent={CategoryPickerItem}
                             placeholder="Category"
-                            selectedItem={selectedCategory}
+                            // selectedItem={selectedCategory}
                         />
                         
                         <AppFormField

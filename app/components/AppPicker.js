@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import AppText from './AppText';
 import Screen from './Screen';
-import AppButton from './AppButton';
+import AppButton from './ui/AppButton';
 
 import colors from '../configs/colors';
 import PickerItem from './PickerItem';

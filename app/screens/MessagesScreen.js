@@ -14,7 +14,6 @@ const initialMessages = [
         description: 'D1',
         image: require('../assets/mosh.jpg')
     },
-
     {
         id: 2,
         title: 'T2',
@@ -23,7 +22,7 @@ const initialMessages = [
     }
 ]
 
-const MessagesScreen = (props) => {
+const MessagesScreen = () => {
 
     const [messages, setMessages] = useState(initialMessages);
     const [refreshing, setRefreshing] = useState(false);

@@ -1,39 +1,18 @@
-import { StyleSheet, Text, TextInput } from "react-native";
+import "react-native-gesture-handler";
 
-import AppButton from "./app/components/AppButton";
-import Screen from "./app/components/Screen";
-import colors from "./app/configs/colors";
+import { NavigationContainer } from "@react-navigation/native";
 
-import AccountScreen from "./app/screens/AccountScreen";
-import ListingDetailsScreen from "./app/screens/ListingDetailsScreen";
-import ListingEditScreen from "./app/screens/ListingEditScreen";
-import ListingsScreen from "./app/screens/ListingsScreen";
-import LoginScreen from "./app/screens/LoginScreen";
-import MessagesScreen from "./app/screens/MessagesScreen";
-import RegisterScreen from "./app/screens/RegisterScreen";
-import ViewImageScreen from "./app/screens/ViewImageScreen";
-import WelcomeScreen from "./app/screens/WelcomeScreen";
+import AppNavigator from "./app/navigations/AppNavigator";
+import AuthNavigator from "./app/navigations/AuthNavigator";
+
+import navigationTheme from "./app/navigations/navigationTheme";
+
 
 export default function App() {
 
     return (
-        // <AccountScreen />
-        // <ListingDetailsScreen title="My Title" price="$100" />
-        // <ListingEditScreen />
-        // <ListingsScreen />
-        // <LoginScreen />
-        // <MessagesScreen />
-        <RegisterScreen />
-        // <ViewImageScreen />
-        // <WelcomeScreen />
-        // <Screen>
-        //     <AppButton color="secondary" title="Test" style={styles.button} />
-        // </Screen>
+        <NavigationContainer theme={navigationTheme}>
+            <AppNavigator />
+        </NavigationContainer>
     );
 }
-
-const styles = StyleSheet.create({
-    // button: {
-    //     backgroundColor: colors.primary,
-    // }
-});

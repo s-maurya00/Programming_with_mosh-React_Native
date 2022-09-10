@@ -1,36 +1,73 @@
+import { useEffect } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 
+import ActivityIndicator from '../components/ActivityIndicator';
+import AppButton from '../components/ui/AppButton';
+import AppText from '../components/AppText';
 import Screen from '../components/Screen';
 import Card from '../components/Card';
+
 import colors from '../configs/colors';
 
-const listings = [
-    {
-        id: 1,
-        title: 'Red Jacket for sale',
-        price: 100,
-        image: require("../assets/jacket.jpg")
-    },
+import routes from '../navigations/routes';
 
-    {
-        id: 2,
-        title: 'Couch in great condition',
-        price: 1000, 
-        image: require("../assets/couch.jpg")
-    },
-]
+import useApi from '../hooks/useApi';
 
-const ListingsScreen = (props) => {
+import listings from '../apis/listings';
+
+// const listings = [
+//     {
+//         id: 1,
+//         title: 'Red Jacket for sale',
+//         price: 100,
+//         image: require("../assets/jacket.jpg")
+//     },
+
+//     {
+//         id: 2,
+//         title: 'Couch in great condition',
+//         price: 1000, 
+//         image: require("../assets/couch.jpg")
+//     },
+
+//     {
+//         id: 3,
+//         title: 'Item3',
+//         price: 500,
+//         image: require("../assets/couch.jpg")
+//     },
+// ]
+
+const ListingsScreen = ( { navigation } ) => {
+
+    const getListingsApi = useApi(listings.getListings);
+
+    useEffect(() => {
+        getListingsApi.request();
+        console.log(getListingsApi.data)
+    }, []);
+
+
     return (
         <Screen style={styles.screen}>
+            {
+                getListingsApi.error &&
+                <>
+                    <AppText>Couldn't get the Listings.</AppText>
+                    <AppButton title="Retry" onPress={getListingsApi.request} />
+                </>
+            }
+            <ActivityIndicator visible={getListingsApi.loading} />
             <FlatList
-                data={listings}
+                showsVerticalScrollIndicator={false}
+                data={getListingsApi.data}
                 keyExtractor={(listing) => listing.id.toString()}
                 renderItem={({ item }) => (
                     <Card
                         title={item.title}
                         subtitle={"$" + item.price}
-                        image={item.image}
+                        imageUrl={item.images[0].url}
+                        onPress={() => navigation.navigate(routes.LISTING_DETAILS_SCREEN, item)}
                     />
                 )}
             />
@@ -40,7 +77,7 @@ const ListingsScreen = (props) => {
 
 const styles = StyleSheet.create({
     screen: {
-        padding: 20,
+        paddingHorizontal: 20,
         backgroundColor: colors.light,
     },
 })
