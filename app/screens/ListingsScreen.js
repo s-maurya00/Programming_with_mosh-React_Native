@@ -13,7 +13,7 @@ import routes from '../navigations/routes';
 
 import useApi from '../hooks/useApi';
 
-import listings from '../apis/listings';
+import listingsApi from '../apis/listings';
 
 // const listings = [
 //     {
@@ -40,7 +40,7 @@ import listings from '../apis/listings';
 
 const ListingsScreen = ( { navigation } ) => {
 
-    const getListingsApi = useApi(listings.getListings);
+    const getListingsApi = useApi(listingsApi.getListings);
 
     useEffect(() => {
         getListingsApi.request();

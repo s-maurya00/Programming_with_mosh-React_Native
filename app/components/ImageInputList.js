@@ -28,6 +28,7 @@ const ImageInputList = ( { imageUris = [], onRemoveImage, onAddImage } ) => {
 
 const styles = StyleSheet.create({
     container: {
+        marginVertical: 10,
         flexDirection: "row",
     },
 

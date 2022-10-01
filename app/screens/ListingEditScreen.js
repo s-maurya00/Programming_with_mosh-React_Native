@@ -9,7 +9,10 @@ import CategoryPickerItem from '../components/CategoryPickerItem';
 import Screen from '../components/Screen';
 
 import colors from '../configs/colors';
+
 import useLocation from '../hooks/useLocation';
+
+import listingsApi from '../apis/listings';
 
 const validationSchema = Yup.object().shape({
     title: Yup.string().required().min(1).label("Title"),
@@ -32,15 +35,24 @@ const categories = [
 ]
 
 const ListingEditScreen = () => {
-    // const [selectedCategory, setSelectedCategory] = useState();
 
     const location = useLocation();
+
+    const handleSubmit = async(listing) => {
+        const result = await listingsApi.addListing({ ...listing, location });
+
+        if(!result.ok) {
+            console.log(result.problem);
+            return alert("Could not save the listing!!");
+        }
+        alert("Success");
+    };
 
     return (
         <Screen style={styles.container}>
             <Formik
                 initialValues={{ title: '', price: '', description: '', category: null, images: [] }}
-                onSubmit={(values) => console.log(location)}
+                onSubmit={handleSubmit}
                 validationSchema={validationSchema}
             >
                 {() => (
@@ -61,10 +73,8 @@ const ListingEditScreen = () => {
                             items={categories}
                             name="category"
                             numberOfColumns={3}
-                            // onSelectItem={item => setSelectedCategory(item)}
                             PickerItemComponent={CategoryPickerItem}
                             placeholder="Category"
-                            // selectedItem={selectedCategory}
                         />
                         
                         <AppFormField
